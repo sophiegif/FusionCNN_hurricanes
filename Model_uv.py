@@ -4,7 +4,8 @@ import torch.nn.functional as F
 import math
 
 
-# CNN for one stream : uv (wind fields)
+# CNN for one stream : uv (wind fields) : 2D data
+
 class Net_2d_conv3_4fc(nn.Module):
     def __init__(self, dropout = 0.5, levellist=[2, 5, 7], params = [0]):
         super(Net_2d_conv3_4fc, self).__init__()
