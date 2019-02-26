@@ -29,7 +29,7 @@ The data to run this code is not directly available (because it is large...).
 
    1) you can ask me to get it (sophie.giffard@colorado.edu)
 
-   2) you can use this code for another task by changing the loss functions and the layers.
+   2) you can use this code for another task by changing the dataloader, loss functions...
 
 
 ![Alt text](img/fusion_network.png?raw=true "fusion network")
