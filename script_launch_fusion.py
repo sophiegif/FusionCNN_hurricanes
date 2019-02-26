@@ -1,11 +1,7 @@
 import sys
-
-sys.path.append('/home/tau/myang/ClimateSaclayRepo/')
+#sys.path.append('/home/tau/myang/ClimateSaclayRepo/')
 import os
 import argparse
-import matplotlib
-
-matplotlib.use('Agg')
 
 from torch.utils.data import DataLoader
 import torch.nn as nn
@@ -14,62 +10,23 @@ import torch.optim as optim
 import Model_uv
 import Model_z
 import Model_fuseall
-import Model_0D as baseModels
+import Model_0D
 
 from Utils.loss import Regress_Loss, Regress_Loss_Mae
 from Utils.Utils import save_checkpoint, early_stopping, dataset_filter_3D
 from Utils.funcs import *
 from Utils.model_inputs_3D import load_datasets
 
-
-# Arguments
-######################
-
-parser = argparse.ArgumentParser(
-    description='training parameters')
-subparsers = parser.add_subparsers(dest='category')
-subparsers.required = True
-parser_category = subparsers.add_parser(
-    'category', description='predict category')
-parser_deplacement = subparsers.add_parser(
-    'deplacement', description='predict deplacement')
-parsers = [parser_category, parser_deplacement]
-
-predict_hours = (6, 24)
-meta = True
-
-for pr in parsers:
-
-    pr.add_argument('--hours', metavar='HOURS', default=24,
-                    type=int, choices=predict_hours,
-                    help='predition hours: (default: 24)')
-    pr.add_argument('--epochs_freeze', default=90, type=int, metavar='N',
-                    help='number of total epochs for the freezing part')
-    pr.add_argument('--epochs_final', default=90, type=int, metavar='N',
-                    help='number of total epochs for the final part')
-    pr.add_argument('-b', '--batch-size', default=256, type=int,
-                    metavar='N', help='mini-batch size (default: 256)')
-    pr.add_argument('--lr', '--learning-rate', default=1e-5, type=float,
-                    metavar='LR', help='initial learning rate')
-    pr.add_argument('--betas', default=(0.9, 0.999), type=float, metavar='B',
-                    help='betas')
-    pr.add_argument('--eps', default=1e-8, type=float, metavar='EPS',
-                    help='eps')
-    pr.add_argument('--weight-decay', '--wd', default=1e-4, type=float,
-                    metavar='W', help='weight decay (default: 1e-4)')
-
-args = parser.parse_args()
-
+##############################
 # paths and hard-coded parameters
 ##############################
 
 data_dir = "/data/titanic_1/users/sophia/myang/model/data_3d_uvz_historic12h/"
 log_dir = "/data/titanic_1/users/sophia/myang/logs/3conv_models_24h/"
-
 log_dir_fusion = log_dir + 'fusion_3conv_uvz0d_fuse3fc_freeze_200/'
 model_dir = log_dir+'models'+'/'
 
-# paths to the saved independent models trained (.tar)
+# paths to the 3 saved independent models trained (.tar)
 uv_model_tar = model_dir  + 'uv_model_best.pth.tar'
 z_model_tar = model_dir + 'z_model_best.pth.tar'
 _0D_model_tar = model_dir  + '0D_model_24h_2t_allmeta_best.pth.tar'
@@ -84,13 +41,48 @@ z_params = (2,5,8)
 # params: 0:u 1:v, 2:z
 load_t = (0,-6,-12)
 arch = "Net_2d_conv3"
+meta = True
+
+##############################
+# Arguments
+##############################
+
+def launch_parser():
+    parser = argparse.ArgumentParser(
+        description='training parameters')
+    subparsers = parser.add_subparsers(dest='category')
+    subparsers.required = True
+    parser_category = subparsers.add_parser(
+        'category', description='predict category')
+    parser_displacement = subparsers.add_parser(
+        'displacement', description='predict displacement')
+    parsers = [parser_category, parser_displacement]
+
+    predict_hours = (6, 24)
+    for pr in parsers:
+        pr.add_argument('--hours', metavar='HOURS', default=24,
+                        type=int, choices=predict_hours,
+                        help='predition hours: (default: 24)')
+        pr.add_argument('--epochs_freeze', default=90, type=int, metavar='N',
+                        help='number of total epochs for the freezing part')
+        pr.add_argument('--epochs_final', default=90, type=int, metavar='N',
+                        help='number of total epochs for the final part')
+        pr.add_argument('-b', '--batch-size', default=256, type=int,
+                        metavar='N', help='mini-batch size (default: 256)')
+        pr.add_argument('--lr', '--learning-rate', default=1e-5, type=float,
+                        metavar='LR', help='initial learning rate')
+        pr.add_argument('--betas', default=(0.9, 0.999), type=float, metavar='B',
+                        help='betas')
+        pr.add_argument('--eps', default=1e-8, type=float, metavar='EPS',
+                        help='eps')
+        pr.add_argument('--weight-decay', '--wd', default=1e-4, type=float,
+                        metavar='W', help='weight decay (default: 1e-4)')
+    arguments = parser.parse_args()
+    return arguments
 
 
-# Main function
-def main(log_dir, trainset, validset, testset,
-             trainloader, validloader, testloader):
+def main(trainloader, validloader, testloader, args):
 
-    global args
     criterion = Regress_Loss()
     criterion_mae = Regress_Loss_Mae()
 
@@ -113,7 +105,7 @@ def main(log_dir, trainset, validset, testset,
     model_z.load_state_dict(checkpoint['state_dict'])
 
     print('-------------------------load_0d_model--------------------------')
-    model_0_d = baseModels.Base_model_disp_onlytracks(dropout=0.0, num_tracks=2, with_windspeed=meta).double().cuda()
+    model_0_d = Model_0D.Base_model_disp_onlytracks(dropout=0.0, num_tracks=2, with_windspeed=meta).double().cuda()
     model_0_d = nn.DataParallel(model_0_d).cuda()
     if os.path.isfile(_0D_model_tar):
         checkpoint = torch.load(_0D_model_tar)
@@ -129,7 +121,7 @@ def main(log_dir, trainset, validset, testset,
     pretrained_dict_0d = model_0_d.state_dict()
     model_dict = model_fusion.state_dict()
 
-    ## LOAD THE WEIGHTS ALREADY TRAINED ##
+    # LOAD THE WEIGHTS ALREADY TRAINED #
     # load weigths for uv
     model_dict['module.conv1_uv.weight'] = pretrained_dict_uv['module.conv1.weight']
     model_dict['module.conv1_uv.bias'] = pretrained_dict_uv['module.conv1.bias']
@@ -174,8 +166,7 @@ def main(log_dir, trainset, validset, testset,
     model_dict['module.conv3_bn_z.running_mean'] = pretrained_dict_z['module.conv3_bn.running_mean']
     model_dict['module.conv3_bn_z.running_var'] = pretrained_dict_z['module.conv3_bn.running_var']
 
-
-    #fc layers uv
+    # fc layers uv
     model_dict['module.fc1_uv.weight'] = pretrained_dict_uv['module.fc1.weight']
     model_dict['module.fc1_uv.bias'] = pretrained_dict_uv['module.fc1.bias']
     model_dict['module.fc1_bn_uv.weight'] = pretrained_dict_uv['module.fc1_bn.weight']
@@ -204,7 +195,7 @@ def main(log_dir, trainset, validset, testset,
     model_dict['module.fc4_bn_uv.running_mean'] = pretrained_dict_uv['module.fc4_bn.running_mean']
     model_dict['module.fc4_bn_uv.running_var'] = pretrained_dict_uv['module.fc4_bn.running_var']
 
-    #fc layers z
+    # fc layers z
     model_dict['module.fc1_z.weight'] = pretrained_dict_z['module.fc1.weight']
     model_dict['module.fc1_z.bias'] = pretrained_dict_z['module.fc1.bias']
     model_dict['module.fc1_bn_z.weight'] = pretrained_dict_z['module.fc1_bn.weight']
@@ -233,7 +224,7 @@ def main(log_dir, trainset, validset, testset,
     model_dict['module.fc4_bn_z.running_mean'] = pretrained_dict_z['module.fc4_bn.running_mean']
     model_dict['module.fc4_bn_z.running_var'] = pretrained_dict_z['module.fc4_bn.running_var']
 
-    ### FOR THE FUSED LAYERS: CONCATNATE TRAINED LAYERS AND ADD 0 WEIGHTS FOR CROSS-STREAM CONNECTIONS ###
+    #  FOR THE FUSED LAYERS: CONCATNATE TRAINED LAYERS AND ADD 0 WEIGHTS FOR CROSS-STREAM CONNECTIONS ###
     param_fc5_weights = torch.zeros([8+8+8, 8+8+9]).cuda().double()
     param_fc5_weights[:8, :8] = pretrained_dict_uv['module.fc5.weight']
     param_fc5_weights[8:16, 8:16] = pretrained_dict_z['module.fc5.weight']
@@ -274,7 +265,6 @@ def main(log_dir, trainset, validset, testset,
         num_params += 1
     num_unfreezed_params = len(('module.fc5.weight', 'module.fc6.weight', 'module.fc7.weight', 'module.fc5.bias',
                                 'module.fc6.bias', 'module.fc7.bias'))
-
     for counter, param in enumerate(model_fusion.parameters()):
         if counter >= num_params-num_unfreezed_params:
             param.requires_grad = True
@@ -285,6 +275,7 @@ def main(log_dir, trainset, validset, testset,
 
     train_loss = []
     valid_loss = []
+
     print('------------------start fusion model training while freezing the former layers----------------------------')
     best_score = 1e10
     for epoch in range(0, args.epochs_freeze):
@@ -308,7 +299,6 @@ def main(log_dir, trainset, validset, testset,
         if early_stopping(train_loss, patience=10, min_delta=1.0):
             print('early stopping at %d epoch' % (epoch + 1))
             break
-
 
     print('------------------continue training without freezing----------------------------')
     print('start testing 1/1')
@@ -358,20 +348,16 @@ def main(log_dir, trainset, validset, testset,
     test_losses, test_losses_mae = get_score_fusion(testloader, model_fusion, criterion, criterion_mae, meta=meta)
 
     print('------------------finished testing----------------------------')
+
     print('save your results here!')
 
 
-
-
-
-
-
-# end of functions for basemodel--------------------------------------------------------------------------------------------------------------
-
 if __name__ == '__main__':
 
+    args = launch_parser()
+
     print('loading dataset...')
-    trainset, validset, testset = load_datasets(sample=1.0, category=args.category, list_params=('u', 'v', 'z'),
+    trainset, validset, testset = load_datasets(sample=1.0, list_params=('u', 'v', 'z'),
                                                 load_t=load_t, valid_split=0.2, test_split=0.2, randomseed=47)
     trainset, validset, testset = dataset_filter_3D(trainset, validset, testset, args.hours, with_tracks=True,
                                                     num_tracks=2, normalize=True, levels=levels,
@@ -384,5 +370,4 @@ if __name__ == '__main__':
     testloader = DataLoader(testset, batch_size=args.batch_size, shuffle=False, sampler=None, batch_sampler=None,
                             num_workers=6)
 
-    main(log_dir=log_dir+'/', trainset=trainset, validset=validset, testset=testset,
-         trainloader=trainloader, validloader=validloader, testloader=testloader)
+    main(trainloader=trainloader, validloader=validloader, testloader=testloader, args=args)

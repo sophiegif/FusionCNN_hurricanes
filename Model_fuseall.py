@@ -3,11 +3,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math
 
+# one layer conv net + fc
 
 
-
-#one layer conv net + fc
 class Net_2d_conv3_fuse_3fc(nn.Module):
+
     def __init__(self, dropout = 0.5, levellist=[2, 5, 7], params = [0]):
         super(Net_2d_conv3_fuse_3fc, self).__init__()
         self.in_channels = len(levellist) * len(params)

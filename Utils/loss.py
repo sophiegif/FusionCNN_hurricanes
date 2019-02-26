@@ -1,6 +1,8 @@
 import torch
 import math
 
+# regression losses for the hurricane tracking :
+
 class Regress_Loss(torch.nn.Module):
 
     def __init__(self):

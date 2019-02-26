@@ -2,15 +2,17 @@ from Utils.Utils import AverageMeter
 import time
 import torch
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
-from Utils.MyDataset import MyDataset, Forecast
+from Utils.MyDataset import MyDataset
 from Utils import loss_notorch
 import pandas as pd
 import pickle
 
 
-def train_0D(train_loader, model, criterion, optimizer, epoch, num_tracks=2, meta = False):
+def train_0D(train_loader, model, criterion, optimizer, epoch, num_tracks=2, meta=False):
     '''
 
     :param train_loader:
@@ -66,8 +68,6 @@ def train_0D(train_loader, model, criterion, optimizer, epoch, num_tracks=2, met
             .format(batch_time=batch_time, data_time=data_time, loss=losses))
 
 
-
-
 def train_2D(train_loader, model, criterion, optimizer, epoch):
 
     batch_time = AverageMeter()
@@ -102,6 +102,7 @@ def train_2D(train_loader, model, criterion, optimizer, epoch):
             'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
             'Loss {loss.avg:.5f}\t'
             .format(batch_time=batch_time, data_time=data_time, loss=losses))
+
 
 def train_2D_uv_z(trainloader_uv, trainloader_z, model, criterion, optimizer, epoch):
 
@@ -179,9 +180,6 @@ def train_fusion(train_loader, model, criterion, optimizer, epoch,num_tracks=2, 
             'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
             'Loss {loss.avg:.5f}\t'
             .format(batch_time=batch_time, data_time=data_time, loss=losses))
-
-
-
 
 
 def get_baseline_score(test_loader_baseline, criterion, criterion_mae, hours=6):
@@ -265,6 +263,7 @@ def get_score_0D(val_loader, model, criterion, criterion_mae,num_tracks=2, multi
 
         return losses, losses_mae_6h,losses_mae_12h,losses_mae_18h, losses_mae_24h
 
+
 def get_score_2D(val_loader, model, criterion, criterion_mae, multio = False):
     if multio == False:
         losses = AverageMeter()
@@ -323,6 +322,8 @@ def get_score_2D_uv_z(validloader_uv, validloader_z, model, criterion, criterion
             losses_mae.update(loss_mae.item(), target.size(0))
     return losses, losses_mae
 
+
+
 def get_score_fusion(val_loader, model, criterion, criterion_mae, num_tracks=2, multio = False, meta=False):
     if multio == False:
         losses = AverageMeter()
@@ -375,7 +376,6 @@ def get_score_fusion(val_loader, model, criterion, criterion_mae, num_tracks=2, 
         return losses, losses_mae_6h, losses_mae_12h, losses_mae_18h, losses_mae_24h
 
 
-
 def get_baseline_losses(dataset, criterion, criterion_mae, hours=6):
     losses_baseline = []
     losses_baseline_mae = []
@@ -388,6 +388,7 @@ def get_baseline_losses(dataset, criterion, criterion_mae, hours=6):
         loss_mae = criterion_mae(output, target).cpu().numpy()
         losses_baseline_mae.append(loss_mae)
     return np.array(losses_baseline), np.array(losses_baseline_mae)
+
 
 def get_0D_model_losses(dataset, model, criterion, criterion_mae, num_tracks=2):
     losses_basemodel = []
@@ -420,6 +421,7 @@ def get_2D_model_losses(dataset, model, criterion, criterion_mae):
             losses_mae.append(loss_mae)
     return np.array(losses), np.array(losses_mae)
 
+
 def get_fusion_model_losses(dataset, model, criterion, criterion_mae,num_tracks=2):
     losses = []
     losses_mae = []
@@ -434,6 +436,7 @@ def get_fusion_model_losses(dataset, model, criterion, criterion_mae,num_tracks=
             loss_mae = criterion_mae(output, target).cpu().numpy()
             losses_mae.append(loss_mae)
     return np.array(losses), np.array(losses_mae)
+
 
 def save_boxplot_MSE(losses_baseline,losses_0D,losses_2D,losses_fusion, set_belong='whole_set', log_dir='/data/titanic_1/users/sophia/myang/logs/'):
     numModels = 4
@@ -641,6 +644,7 @@ def draw_tracks(trainset, validset, testset, storm_id, net, criterion, criterion
     plt.savefig(visual_dir+name+'.pdf')
     plt.close()
 
+
 def _get_data(trainset, validset, testset,storm_id):
     if storm_id in trainset.ids:
         set_belong = 'train'
@@ -663,6 +667,7 @@ def _packinDataset(storm_id,dataset):
     timestep = np.array(dataset.timestep)[dataset.ids == storm_id]
     return MyDataset(X, Y, ids, timestep)
 
+
 def _extract_hurricanes(dataset,windspeed_threshold=40):
     storm_ids = np.unique(dataset.ids)
     data = pd.read_csv("/data/titanic_1/users/sophia/sgiffard/data/Xy/2018_04_10_ERA_interim_storm/1D_data_matrix_IBTRACS.csv")
@@ -677,7 +682,8 @@ def _extract_hurricanes(dataset,windspeed_threshold=40):
     timestep = timestep_h
     return MyDataset(X,Y,ids,timestep)
 
-def save_forecast_result(model, testset, testloader,log_dir, fusion=False, num_tracks=2, name='result', meta=False):
+
+def save_forecast_result(model, testset, testloader, log_dir, fusion=False, num_tracks=2, name='result', meta=False):
     model.eval()
     if fusion == False:
         with torch.no_grad():
@@ -871,6 +877,7 @@ def Record_forecast(criterion_mae, log_dir, hours, filename='result.csv'):
             plt.savefig(log_dir+basin+'_comparison_of_models_errors_per_year.pdf')
             plt.show()
             plt.close()
+
 
 def plot_forecast_compare(log_dir, hours):
     '''

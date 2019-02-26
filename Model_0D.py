@@ -4,6 +4,8 @@ import torch.nn.functional as F
 import math
 
 # NN for one stream : 0D data
+
+
 class Base_model_disp_onlytracks(nn.Module):
     def __init__(self, dropout = 0.5, num_tracks = 2, with_windspeed = False):
         super(Base_model_disp_onlytracks, self).__init__()

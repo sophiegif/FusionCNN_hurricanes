@@ -1,10 +1,7 @@
 ## Module to provide tools for deep learning
-
 import torch
 import shutil
-import matplotlib
 import numpy as np
-matplotlib.use('Agg')
 import pandas as pd
 from tqdm import tqdm
 from Utils.MyDataset import MyDataset
