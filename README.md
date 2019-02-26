@@ -27,7 +27,7 @@ This code is data-specific. However, the blocks could be easily re-used for othe
 ## To keep in mind:
 The data to run this code is not directly available (because it is large...).
 
-   1) you can ask me to get it (sophie.giffard@colorado.edu)
+   1) you can ask me to get it (sophie.giffard at colorado.edu)
 
    2) you can use this code for another task by changing the dataloader, loss functions...
 
