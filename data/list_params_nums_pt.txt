@@ -1,0 +1,10 @@
+id,shortname,CDFname,name
+53.128, mont,, Montgomery potential
+54.128, pres,, pressure
+60.128, pv,, potential vorticity
+131.128, u,, u component of wind
+132.128, v,, v component of wind
+133.128, q,, specific humidity
+138.128, vo,, vorticity (relative)
+155.128, d,, divergence
+203.128, o3,, ozone mass mixing ratio

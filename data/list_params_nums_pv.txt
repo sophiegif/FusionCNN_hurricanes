@@ -1,0 +1,8 @@
+id,shortname,CDFname,name
+3.128, pt,, potential temperature
+54.128, pres,, pressure
+129.128,, geopotential, z
+131.128, u,, u component of wind
+132.128, v,, v component of wind
+133.128, q,, specific humidity
+203.128, o3,, ozone mass mixing ratio

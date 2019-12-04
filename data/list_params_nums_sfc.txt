@@ -1,0 +1,78 @@
+id,shortname,CDFname,name
+31.128, ci, , sea-ice cover
+32.128, asn, , snow albedo
+33.128, rsn, , snow density
+34.128, sst, sst, sea surface temperature
+35.128, isrl1, , ice temperature layer 1
+36.128, isrl2, , ice temperature layer 2
+37.128, isrl3, , ice temperature layer 3
+38.128, isrl4, , ice temperature layer 4
+39.128, swvl1, , volumetric soil water layer 1
+40.128, swvl2, , volumetric soil water layer 2
+41.128, swvl3, , volumetric soil water layer 3
+42.128, swvl4, , volumetric soil water layer 4
+53.162, mont, p53.162, Montgomery potential
+54.162, pres, p54.162, pressure
+55.162, mean2t24, p55.162, mean temperature at 2 metres in the last 24 hours
+56.162, mn2d24, p56.162, mean 2 metre dewpoint temperature in the last 24 hours
+57.162, uvb, p57.162, Downward UV radiation at the surface
+58.162, par, p58.162, photosynthetically active radiation at the surface
+59.162, cape, p59.162, convective available potential energy
+60.162, pv, p60.162, potential vorticity
+61.162, None, , None
+62.162, obct, p62.162, Observation count
+63.162, stsktd, p63.162, start time for skin temperature difference
+64.162, ftsktd, p64.162, finish time for skin temperature difference
+65.162, sktd, p65.162, skin temperature difference
+66.162, lai_lv, , leaf area index, low vegetation
+67.162, lai_hv, , leaf area index, high vegetation
+68.162, msr_lv, , minimum stomatal resistance low vegetation
+69.162, msr_hv, , minimum stomatal resistance high vegetation
+70.162, bc_lv, , biome cover low vegetation
+71.162, bc_hv, , biome cover high vegetation
+72.162, issrd, p72.162, instantaneous surface solar radiation downwards
+73.162, istrd, p73.162, instantaneous surface thermal radiation downwards
+74.162, sdfor, p74.162, stanfard deviation of filtered subgrid orography
+75.162, crwc, p75.162, specific rain water content
+76.162, cswc, , specific snow water content
+77.162, etadot, p77.162, Eta-coordinate vertical velocity
+78.162, tclw, p78.162, total column cloud liquid water 
+79.162, tciw, , total column cloud ice water
+80.162, None, , None 
+81.162, None, , None
+82.162, None, , None
+83.162, None, , None
+84.162, None, , None
+85.162, None, , None
+86.162, None, , None
+87.162, None, , None
+88.162, None, , None
+89.162, None, , None
+90.162, None, , None
+91.162, None, , None
+92.162, None, , None
+134.128, sp, sp, surface pressure
+136.128, tcw, tcw, total column water
+137.128, tcwv, tcwv, total column water vapour
+139.128, stl1, stl1, Soil temperature level 1
+141.128, sd, , snow depth
+148.128, chnk, chnk, Charnock
+151.128, msl, msl, mean sea level pressure
+164.128, tcc, tcc, total cloud cover
+165.128, 10u, u10, 10-meter U wind component
+166.128, 10v, v10, 10-meter V wind component
+167.128, 2t, t2m, 2 metre temperature 
+168.128, 2dm, d2m, 2 metre dewpoint temperature
+170.128, stl2, , soil temperature level 2
+173.128, sr, sr, surface roughness
+174.128, al, al, Albedo
+183.128, stl3, , soil temperature level 3
+186.128, lcc, lcc, low cloud cover
+187.128, mcc, mcc, medium cloud cover
+188.128, hcc, hcc, high cloud cover
+198.128, src, src, skin reservoir content
+206.128, tco3, tco3, total column ozone
+234.128, lsrh, lsrh, logarithm of surface roughness length for heat
+235.128, skt, skt, skin temperature
+236.128, stl4, , soil temperature level 4
+238.128, tsn, , temperature of snow layer

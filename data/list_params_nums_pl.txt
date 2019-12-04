@@ -1,0 +1,15 @@
+id,shortname,CDFname,name
+60.128, pv, pv, potential vorticity
+129.128, z, z, geopotential
+130.128, t, t, temperature
+131.128, u, u, u component of wind
+132.128, v, v, v component of wind
+133.128, q, q, specific humidity
+135.128, w, w, vertical velocity
+138.128, vo, vo, vorticity (relative)
+155.128, d, d, divergence
+157.128, r, r, relative humidity
+203.128, o3, o3, ozone mass mixing ratio
+246.128, clwc, clwc, specific cloud liquid water content
+247.128, ciwc, ciwc, specific cloud ice water content
+248.128, cc, cc, fraction of cloud content

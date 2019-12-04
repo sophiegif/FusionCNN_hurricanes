@@ -1,0 +1,12 @@
+id,shortname,CDFname,name
+130.128, t,, temperature
+131.128, u,, u component of wind
+132.128, v,, v component of wind
+133.128, q,, specific humidity
+135.128, w,, vertical velocity
+138.128, vo,, vorticity (relative)
+155.128, d,, divergence
+203.128, o3,o3, ozone mass mixing ratio
+246.128, clwc,clwc, specific cloud liquid water content
+247.128, ciwc,ciwc, specific cloud ice water content
+248.128, cc,cc, fraction of cloud content

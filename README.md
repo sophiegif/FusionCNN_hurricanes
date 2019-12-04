@@ -7,6 +7,10 @@ Sophie Giffard-Roisin, Mo Yang, Guillaume Charpiat, Balázs Kégl, Claire Montel
 
 This code is data-specific. However, the blocks could be easily re-used for other problems.
 
+### Also included: data collection/processing functions.
+processing and collection of ERAInterm data and IBTRACS data. See the scripts_data_collect_process/
+and the DataProcessing module.
+
 ## How to run it:
 1) launch the 3 separate data-stream neural network trainings: 
     - script_train_0D_model.py for the simple 0D neural network
