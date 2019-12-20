@@ -15,7 +15,7 @@ and the DataProcessing/ module. Be aware that ERAInterm reanalysis is already ou
 ## To keep in mind:
 The data to run this code is not directly available (because it is large and already outdated...!).
 
-   1) you can use the DataProcessing module functions to help you for retrieving/processing the track and/or reanalysis data avalailable online. Please look at the Discussion section of this paper (https://arxiv.org/abs/1910.10566) in order to make the good data processing choices, such as the new ERA5 reanalysis.
+   1) you can use the DataProcessing module functions to help you for retrieving/processing the track and/or reanalysis data avalailable online. Please look at the Discussion section of this paper (https://arxiv.org/abs/1910.10566) in order to make the good data processing choices, such as the new ERA5 reanalysis. See the databases: https://apps.ecmwf.int/datasets/ and https://www.ncdc.noaa.gov/ibtracs
 
    2) you can use the fusion code for another task by changing the dataloader, loss functions...
 
