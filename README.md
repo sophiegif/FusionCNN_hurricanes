@@ -5,11 +5,12 @@ see 'Deep Learning for Hurricane Track Forecasting from Aligned Spatio-temporal 
 Sophie Giffard-Roisin, Mo Yang, Guillaume Charpiat, Balázs Kégl, Claire Monteleoni, NIPS 2018 Workshop Spatiotemporal
 , https://hal.archives-ouvertes.fr/hal-01905408/
  See also the journal version: https://arxiv.org/abs/1910.10566
+
 This code is data-specific. However, the blocks could be easily re-used for other problems.
 
 ### Also included: data collection/processing functions.
-processing and collection of ERAInterm data and IBTRACS data. See the scripts_data_collect_process/
-and the DataProcessing module.
+Processing and collection of ERAInterm data and IBTRACS data. See the scripts_data_collect_process/
+and the DataProcessing/ module. Be aware that ERAInterm reanalysis is already outdated... but the codes can be re-used for ERA5 data, also freely avaible online.
 
 ## How to run it:
 1) launch the 3 separate data-stream neural network trainings: 
