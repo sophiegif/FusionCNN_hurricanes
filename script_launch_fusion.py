@@ -1,5 +1,7 @@
+# Copyright (c) 2020 Sophie Giffard-Roisin <sophie.giffard@univ-grenoble-alpes.fr>
+# SPDX-License-Identifier: GPL-3.0
+
 import sys
-#sys.path.append('/home/tau/myang/ClimateSaclayRepo/')
 import os
 import argparse
 
@@ -21,8 +23,8 @@ from Utils.model_inputs_3D import load_datasets
 # paths and hard-coded parameters
 ##############################
 
-data_dir = "/data/titanic_1/users/sophia/myang/model/data_3d_uvz_historic12h/"
-log_dir = "/data/titanic_1/users/sophia/myang/logs/3conv_models_24h/"
+data_dir = "/model/data_3d_uvz_historic12h/"
+log_dir = "/logs/"
 log_dir_fusion = log_dir + 'fusion_3conv_uvz0d_fuse3fc_freeze_200/'
 model_dir = log_dir+'models'+'/'
 

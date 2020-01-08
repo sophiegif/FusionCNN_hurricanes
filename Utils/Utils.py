@@ -1,3 +1,6 @@
+# Copyright (c) 2020 Sophie Giffard-Roisin <sophie.giffard@univ-grenoble-alpes.fr>
+# SPDX-License-Identifier: GPL-3.0
+
 ## Module to provide tools for deep learning
 import torch
 import shutil
@@ -6,7 +9,7 @@ import pandas as pd
 from tqdm import tqdm
 from Utils.MyDataset import MyDataset
 
-DIR = "/data/titanic_1/users/sophia/myang/model/"
+DIR = "/model/"
 
 class AverageMeter(object):
     """Computes and stores the average and current value"""
@@ -116,7 +119,7 @@ def dataset_filter(trainset, validset, testset, hours, with_tracks=False):
 
 def extract_hurricanes(dataset):
     storm_ids = np.unique(dataset.ids)
-    data = pd.read_csv("/data/titanic_1/users/sophia/sgiffard/data/Xy/2018_04_10_ERA_interim_storm/1D_data_matrix_IBTRACS.csv")
+    data = pd.read_csv("/data/1D_data_matrix_IBTRACS.csv")
     hurricanes = data[data['windspeed'] >= 64]
     first = True
     for id in tqdm(storm_ids):

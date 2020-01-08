@@ -1,6 +1,8 @@
+# Copyright (c) 2020 Sophie Giffard-Roisin <sophie.giffard@univ-grenoble-alpes.fr>
+# SPDX-License-Identifier: GPL-3.0
+
 from __future__ import print_function
 import sys
-sys.path.append('/home/tau/myang/ClimateSaclayRepo/')
 import numpy as np
 from collections import Counter
 from Utils.MyDataset import MyDataset
@@ -8,10 +10,10 @@ import pickle
 from tqdm import tqdm
 import pandas as pd
 
-X_DIR = '/data/titanic_1/users/sophia/sgiffard/data/Xy/2018_04_10_ERA_interim_storm/X_pl_crop25_z_u_v/'
-X_DIR2 = '/data/titanic_1/users/sophia/sgiffard/data/Xy/2018_04_10_ERA_interim_storm/X_pl_crop25_z_u_v_historic6h/'
-Y_DIR_D = '/data/titanic_1/users/sophia/sgiffard/data/Xy/2018_04_10_ERA_interim_storm/y_disp2/'
-Data_stormids_csv = "/data/titanic_1/users/sophia/sgiffard/data/Xy/2018_04_10_ERA_interim_storm/1D_data_matrix_IBTRACS.csv"
+X_DIR = '/data/Xy/2018_04_10_ERA_interim_storm/X_pl_crop25_z_u_v/'
+X_DIR2 = '/data/Xy/2018_04_10_ERA_interim_storm/X_pl_crop25_z_u_v_historic6h/'
+Y_DIR_D = '/data/Xy/2018_04_10_ERA_interim_storm/y_disp2/'
+Data_stormids_csv = "/data/Xy/2018_04_10_ERA_interim_storm/1D_data_matrix_IBTRACS.csv"
 
 
 

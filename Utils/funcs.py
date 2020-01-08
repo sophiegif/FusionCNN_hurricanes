@@ -1,3 +1,6 @@
+# Copyright (c) 2020 Sophie Giffard-Roisin <sophie.giffard@univ-grenoble-alpes.fr>
+# SPDX-License-Identifier: GPL-3.0
+
 from Utils.Utils import AverageMeter
 import time
 import torch
@@ -438,7 +441,7 @@ def get_fusion_model_losses(dataset, model, criterion, criterion_mae,num_tracks=
     return np.array(losses), np.array(losses_mae)
 
 
-def save_boxplot_MSE(losses_baseline,losses_0D,losses_2D,losses_fusion, set_belong='whole_set', log_dir='/data/titanic_1/users/sophia/myang/logs/'):
+def save_boxplot_MSE(losses_baseline,losses_0D,losses_2D,losses_fusion, set_belong='whole_set', log_dir='/logs/'):
     numModels = 4
     data = [losses_baseline,losses_2D,losses_0D,losses_fusion]
 
@@ -519,7 +522,7 @@ def save_boxplot_MSE(losses_baseline,losses_0D,losses_2D,losses_fusion, set_belo
     plt.close()
 
 
-def save_boxplot_MAE(losses_baseline,losses_0D,losses_2D,losses_fusion, set_belong='whole_set', log_dir='/data/titanic_1/users/sophia/myang/logs/'):
+def save_boxplot_MAE(losses_baseline,losses_0D,losses_2D,losses_fusion, set_belong='whole_set', log_dir='/logs/'):
     numModels = 4
     data = [losses_baseline,losses_2D,losses_0D,losses_fusion]
 
@@ -600,7 +603,7 @@ def save_boxplot_MAE(losses_baseline,losses_0D,losses_2D,losses_fusion, set_belo
     plt.close()
 
 
-def draw_tracks(trainset, validset, testset, storm_id, net, criterion, criterion_mae, name='issac', windspeed_threshold=0, visual_dir= '/data/titanic_1/users/sophia/myang/logs/'):
+def draw_tracks(trainset, validset, testset, storm_id, net, criterion, criterion_mae, name='issac', windspeed_threshold=0, visual_dir= '/logs/'):
     storm_data, set_belong = _get_data(trainset, validset, testset,storm_id)
     #print(set_belong)
     storm_data = _extract_hurricanes(storm_data,windspeed_threshold=windspeed_threshold)
@@ -670,7 +673,7 @@ def _packinDataset(storm_id,dataset):
 
 def _extract_hurricanes(dataset,windspeed_threshold=40):
     storm_ids = np.unique(dataset.ids)
-    data = pd.read_csv("/data/titanic_1/users/sophia/sgiffard/data/Xy/2018_04_10_ERA_interim_storm/1D_data_matrix_IBTRACS.csv")
+    data = pd.read_csv("/data/1D_data_matrix_IBTRACS.csv")
     hurricanes = data[data['windspeed'] >= windspeed_threshold]
     id = storm_ids[0]
     timestep_h = hurricanes[hurricanes['stormid'] == id]['instant_t'].values
@@ -736,7 +739,7 @@ def Record_forecast(criterion_mae, log_dir, hours, filename='result.csv'):
     ground_truth = results[:,6:8].astype('float64')
     target = np.concatenate((loc.reshape(-1,1,2), ground_truth.reshape(-1,1,2)), axis=1)
 
-    with open('/data/titanic_1/users/sophia/myang/model/data_3d_uvz_historic6h/forecast_existing.pkl', 'rb') as f:
+    with open('/model/data_3d_uvz_historic6h/forecast_existing.pkl', 'rb') as f:
         data = pickle.load(f)
 
     for basin in ['ATL', 'EPAC']:
@@ -895,7 +898,7 @@ def plot_forecast_compare(log_dir, hours):
     instant_t = np.array(Data_pred[3])
     coords_t = np.array([Data_pred[4], Data_pred[5]]).T
 
-    folder_comp='/data/titanic_1/users/sophia/sgiffard/data/forecasts_existing/'
+    folder_comp='/data/forecasts_existing/'
     for basin in ['ATL', 'EPAC']:
         # model results (atlantic and pacific only)
         base_namefile=folder_comp+'1989-present_OFCL_v_BCD5_ind_'+basin +'_AC_errors'

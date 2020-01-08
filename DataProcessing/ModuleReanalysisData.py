@@ -1,3 +1,6 @@
+# Copyright (c) 2020 Sophie Giffard-Roisin <sophie.giffard@univ-grenoble-alpes.fr>
+# SPDX-License-Identifier: GPL-3.0
+
 from ftplib import FTP
 from netCDF4 import Dataset
 from netCDF4 import num2date, date2num

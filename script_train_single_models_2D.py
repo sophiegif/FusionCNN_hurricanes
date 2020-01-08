@@ -1,5 +1,6 @@
-import sys
-#sys.path.append('/home/tau/myang/ClimateSaclayRepo/')
+# Copyright (c) 2020 Sophie Giffard-Roisin <sophie.giffard@univ-grenoble-alpes.fr>
+# SPDX-License-Identifier: GPL-3.0
+
 import os
 import argparse
 

@@ -1,3 +1,6 @@
+# Copyright (c) 2020 Sophie Giffard-Roisin <sophie.giffard@univ-grenoble-alpes.fr>
+# SPDX-License-Identifier: GPL-3.0
+
 import DataProcessing.ModuleStormReader as Msr
 
 # get this file or a similar one from https://www.ncdc.noaa.gov/ibtracs/
