@@ -19,8 +19,8 @@ from Utils.save_figs_logs import save_log_0D, save_fig_0D, save_forecast_result_
 # hyper-parameters to set here
 ######################
 
-data_dir = "/data/titanic_1/users/sophia/myang/model/data_3d_uvz_historic12h/"
-log_dir = "/data/titanic_1/users/sophia/sgiffard/Tracking_res/CNN_res/logs/0D_24h_allmeta_standard/"
+data_dir = "/model/data_3d_uvz_historic12h/"
+log_dir = "/logs/"
 
 levels = (2, 5)
 params = []
