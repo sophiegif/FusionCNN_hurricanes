@@ -1,10 +1,8 @@
 # FusionCNN_hurricanes
 
 ### Public codes for fusing CNN networks (for hurricane forecasting)
-see 'Deep Learning for Hurricane Track Forecasting from Aligned Spatio-temporal Climate Datasets'.
-Sophie Giffard-Roisin, Mo Yang, Guillaume Charpiat, Balázs Kégl, Claire Monteleoni, NIPS 2018 Workshop Spatiotemporal
-, https://hal.archives-ouvertes.fr/hal-01905408/
- See also the journal version: https://arxiv.org/abs/1910.10566
+see 'Tropical Cyclone Track Forecasting using Fused Deep Learning from Aligned Reanalysis Data', 2020.
+Sophie Giffard-Roisin, Mo Yang, Guillaume Charpiat, Balázs Kégl, Claire Monteleoni, Frontiers in Big Data - Data-driven Climate Sciences https://arxiv.org/abs/1910.10566
 
 This code is data-specific. However, the blocks could be easily re-used for other problems.
 
